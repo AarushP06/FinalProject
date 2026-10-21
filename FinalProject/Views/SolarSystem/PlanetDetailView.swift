@@ -11,6 +11,7 @@ struct PlanetDetailView: View {
     let planet: CelestialBody
 
     @Environment(\.modelContext) private var context
+    @Query(filter: #Predicate<CelestialBody> { $0.name == "Earth" }) private var earthBodies: [CelestialBody]
     @State private var viewModel = SolarSystemViewModel()
     @State private var showingObservationForm = false
 
@@ -36,7 +37,15 @@ struct PlanetDetailView: View {
                     }
                 }
 
-                // TODO (Prompt 2): Swift Charts comparison with Earth.
+                if let earth = earthBodies.first {
+                    PlanetComparisonChart(
+                        planetName: planet.name,
+                        rows: viewModel.comparisonRows(for: planet, comparedTo: earth)
+                    )
+                } else {
+                    Text("Earth comparison unavailable")
+                        .foregroundStyle(.secondary)
+                }
 
                 Button {
                     showingObservationForm = true

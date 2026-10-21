@@ -14,6 +14,13 @@ struct PlanetStat: Identifiable {
     var id: String { title }
 }
 
+/// One planet measurement divided by the same measurement for Earth.
+struct PlanetComparisonRow: Identifiable {
+    let title: String
+    let ratio: Double
+    var id: String { title }
+}
+
 /// Logic for the Solar System tab: the Pluto toggle, favorites, and formatted stats.
 @Observable
 final class SolarSystemViewModel {
@@ -41,6 +48,15 @@ final class SolarSystemViewModel {
             PlanetStat(title: "Length of year", value: yearLengthText(body.yearLengthDays)),
             PlanetStat(title: "Distance from Sun", value: "\(format(body.distanceAU, digits: 2)) AU"),
             PlanetStat(title: "Radius", value: "\(format(body.radiusKm, digits: 0)) km")
+        ]
+    }
+
+    /// Ratios use the seeded Earth record, so Earth always appears as 1×.
+    func comparisonRows(for body: CelestialBody, comparedTo earth: CelestialBody) -> [PlanetComparisonRow] {
+        [
+            PlanetComparisonRow(title: "Gravity", ratio: body.gravity / earth.gravity),
+            PlanetComparisonRow(title: "Radius", ratio: body.radiusKm / earth.radiusKm),
+            PlanetComparisonRow(title: "Length of day", ratio: body.dayLengthHours / earth.dayLengthHours)
         ]
     }
 
