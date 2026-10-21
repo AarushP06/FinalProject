@@ -14,7 +14,7 @@ final class SkyObservation {
     var date: Date
     var notes: String
     var rating: Int                 // 1–5
-    var latitude: Double?           // filled in later (Prompt 8)
+    var latitude: Double?
     var longitude: Double?
     @Attribute(.externalStorage) var photoData: Data?
 

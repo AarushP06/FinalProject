@@ -12,6 +12,7 @@ struct EventDetailView: View {
 
     @Query private var savedEvents: [SavedEvent]
     @State private var showingSaveSheet = false
+    @State private var viewModel = EventDetailViewModel()
 
     private var isSaved: Bool {
         savedEvents.contains { $0.eventID == event.id }
@@ -51,7 +52,7 @@ struct EventDetailView: View {
                 section(title: "Where to see it", text: event.visibility)
                 section(title: "What happens", text: event.summary)
 
-                // TODO (Prompt 9): related news articles for this event.
+                relatedNewsSection
             }
             .padding()
         }
@@ -67,6 +68,38 @@ struct EventDetailView: View {
         }
         .sheet(isPresented: $showingSaveSheet) {
             SaveEventSheet(event: event)
+        }
+        .task(id: event.id) {
+            await viewModel.loadRelatedNews(for: event)
+        }
+    }
+
+    private var relatedNewsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Related news")
+                .font(.headline)
+
+            if viewModel.isLoading {
+                ProgressView("Loading related news…")
+            } else if let message = viewModel.errorMessage {
+                Text(message)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Button("Try again") {
+                    Task { await viewModel.loadRelatedNews(for: event) }
+                }
+            } else if viewModel.articles.isEmpty {
+                Text("No related articles found.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            } else {
+                ForEach(viewModel.articles) { article in
+                    Link(destination: article.url) {
+                        NewsRow(article: article)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
         }
     }
 

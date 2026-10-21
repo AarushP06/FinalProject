@@ -6,6 +6,9 @@
 import Foundation
 import SwiftData
 import Observation
+import PhotosUI
+import SwiftUI
+import UIKit
 
 /// All create / update / delete logic for saved events and observations.
 /// Views call these methods instead of touching the ModelContext directly.
@@ -16,6 +19,10 @@ final class MySkyViewModel {
     var notificationMessage: String?
     var calendarMessage: String?
     var calendarAdded = false
+    var photoMessage: String?
+    var locationMessage: String?
+
+    @ObservationIgnored private let locationService = LocationService()
 
     // MARK: - Saved events
 
@@ -72,12 +79,41 @@ final class MySkyViewModel {
 
     // MARK: - Observations
 
+    func loadObservationPhoto(_ item: PhotosPickerItem) async -> Data? {
+        do {
+            guard let data = try await item.loadTransferable(type: Data.self),
+                  UIImage(data: data) != nil else {
+                photoMessage = "Couldn't load that photo. Choose another image."
+                return nil
+            }
+            photoMessage = nil
+            return data
+        } catch {
+            photoMessage = "Couldn't load the photo: \(error.localizedDescription)"
+            return nil
+        }
+    }
+
+    func currentObservationCoordinates() async -> ObservationCoordinates? {
+        do {
+            let coordinates = try await locationService.currentCoordinates()
+            locationMessage = nil
+            return coordinates
+        } catch {
+            locationMessage = error.localizedDescription
+            return nil
+        }
+    }
+
     /// Creates a new observation, or updates `existing` if one is passed in.
     func saveObservation(existing: SkyObservation?,
                          title: String,
                          date: Date,
                          notes: String,
                          rating: Int,
+                         latitude: Double?,
+                         longitude: Double?,
+                         photoData: Data?,
                          celestialBody: CelestialBody?,
                          event: SavedEvent?,
                          context: ModelContext) {
@@ -92,6 +128,9 @@ final class MySkyViewModel {
             existing.date = date
             existing.notes = notes
             existing.rating = rating
+            existing.latitude = latitude
+            existing.longitude = longitude
+            existing.photoData = photoData
             existing.celestialBody = celestialBody
             existing.event = event
         } else {
@@ -101,6 +140,9 @@ final class MySkyViewModel {
                                           rating: rating,
                                           celestialBody: celestialBody,
                                           event: event)
+            observation.latitude = latitude
+            observation.longitude = longitude
+            observation.photoData = photoData
             context.insert(observation)
         }
         persist(context)

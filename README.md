@@ -27,10 +27,10 @@ Space events like eclipses and meteor showers are easy to miss, and most people 
 - Swift Charts for Earth comparisons
 - Local notifications for saved events (9 a.m. the day before)
 - EventKit write-only access to add saved events as all-day calendar entries
+- PhotosPicker and Core Location for observation photos and coordinates
 - URLSession, async/await, Codable (Spaceflight News API)
 - Launch Library 2 v2.3.0 (upcoming launches, one-hour JSON cache)
 - Bundled JSON data for planets and sky events
-- Planned: Core Location, PhotosPicker
 
 ## Project structure
 

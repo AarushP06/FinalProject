@@ -115,19 +115,24 @@ struct ObservationRow: View {
     let observation: SkyObservation
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(observation.title).font(.headline)
-            HStack(spacing: 6) {
-                Text(observation.date, format: .dateTime.month(.abbreviated).day().year())
-                if let planetName = observation.celestialBody?.name {
-                    Text("· \(planetName)")
-                }
-                Spacer()
-                Text(String(repeating: "★", count: observation.rating))
-                    .foregroundStyle(.yellow)
+        HStack(spacing: 12) {
+            if let photoData = observation.photoData {
+                ObservationPhotoThumbnail(data: photoData, size: 54)
             }
-            .font(.caption)
-            .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(observation.title).font(.headline)
+                HStack(spacing: 6) {
+                    Text(observation.date, format: .dateTime.month(.abbreviated).day().year())
+                    if let planetName = observation.celestialBody?.name {
+                        Text("· \(planetName)")
+                    }
+                    Spacer()
+                    Text(String(repeating: "★", count: observation.rating))
+                        .foregroundStyle(.yellow)
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            }
         }
         .contentShape(Rectangle())
     }
