@@ -15,7 +15,7 @@ Space events like eclipses and meteor showers are easy to miss, and most people 
 
 1. **Sky Events:** upcoming eclipses and meteor showers with a countdown, where they're visible, and what happens. Filter by type and save events to My Sky.
 2. **Space News and Launches:** the latest spaceflight articles and upcoming launches, with pull to refresh. Launches are cached for one hour to limit API requests.
-3. **Solar System:** the eight planets, with a toggle to include Pluto. Each planet opens a 3D model you can rotate and zoom, plus insight cards (gravity, temperature, moons, day and year length).
+3. **Solar System:** the eight planets, with a toggle to include Pluto. Each planet opens a 3D model you can rotate and zoom, plus insight cards (gravity, temperature, moons, day and year length). An optional API refresh adds current moon counts, mass, and density.
 4. **My Sky:** saved events with notes and reminders, and an observation log (create, edit, delete) linked to planets and events.
 
 ## Technologies used
@@ -62,14 +62,14 @@ The app works without any API keys. Planets and sky events come from the bundled
 |---|---|---|
 | Spaceflight News API | No | News tab |
 | Launch Library 2 | No (15 requests/hour) | Upcoming launches |
-| Solar System OpenData (planned) | Yes, free by email | Extra planet data |
+| Solar System OpenData | Yes, free by email | Optional planet refresh |
 | Gemini API, free tier (optional) | Yes | AI feature |
 
 To add a key:
 
-1. Create `FinalProject/Secrets.plist` (it is already in `.gitignore`, so it is never committed).
-2. Add a String entry per key, for example `SOLAR_SYSTEM_API_KEY` or `GEMINI_API_KEY`.
-3. The app reads keys from this file at runtime. If the file is missing, those features fall back to the bundled data.
+1. Copy `FinalProject/Secrets.example.plist` to `FinalProject/Secrets.plist` (the copy is gitignored).
+2. Add your free Solar System OpenData key as the `SOLAR_SYSTEM_API_KEY` String value. Get one from [Solar System OpenData](https://api.le-systeme-solaire.net/en/generatekey.html).
+3. The app reads the key from this bundled file at runtime. Without it, planet details keep their bundled values and show a short message when you tap **Refresh from API**.
 
 **Never commit API keys to GitHub.**
 
@@ -80,6 +80,7 @@ To add a key:
 - Planet values are rounded averages. Moon counts change as new moons are confirmed.
 - News: Spaceflight News API by The Space Devs
 - Launches: Launch Library 2 by The Space Devs
+- Optional planet refresh: [Solar System OpenData](https://api.le-systeme-solaire.net/en/)
 
 ## Planet texture maps
 

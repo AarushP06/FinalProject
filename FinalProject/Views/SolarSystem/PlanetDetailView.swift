@@ -33,6 +33,22 @@ struct PlanetDetailView: View {
 
                 Text(planet.summary)
 
+                Button {
+                    Task { await viewModel.refreshFromAPI(planet, context: context) }
+                } label: {
+                    Label("Refresh from API", systemImage: "arrow.clockwise")
+                }
+                .disabled(viewModel.isRefreshing)
+
+                if viewModel.isRefreshing {
+                    ProgressView("Refreshing planet data…")
+                }
+                if let message = viewModel.refreshMessage {
+                    Text(message)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
                 LazyVGrid(columns: columns, spacing: 12) {
                     ForEach(viewModel.stats(for: planet)) { stat in
                         StatCard(title: stat.title, value: stat.value)

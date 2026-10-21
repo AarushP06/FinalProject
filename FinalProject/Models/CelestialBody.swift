@@ -17,6 +17,8 @@ final class CelestialBody {
     var gravity: Double             // m/s²
     var meanTemperatureC: Double
     var moonCount: Int
+    var massKg: Double?
+    var densityGramsPerCm3: Double?
     var dayLengthHours: Double
     var yearLengthDays: Double
     var distanceAU: Double          // average distance from the Sun
