@@ -14,7 +14,7 @@ Space events like eclipses and meteor showers are easy to miss, and most people 
 ## Main features
 
 1. **Sky Events:** upcoming eclipses and meteor showers with a countdown, where they're visible, and what happens. Filter by type and save events to My Sky.
-2. **Space News:** the latest spaceflight articles from the Spaceflight News API, with pull to refresh.
+2. **Space News and Launches:** the latest spaceflight articles and upcoming launches, with pull to refresh. Launches are cached for one hour to limit API requests.
 3. **Solar System:** the eight planets, with a toggle to include Pluto. Each planet opens a 3D model you can rotate and zoom, plus insight cards (gravity, temperature, moons, day and year length).
 4. **My Sky:** saved events with notes and reminders, and an observation log (create, edit, delete) linked to planets and events.
 
@@ -25,6 +25,7 @@ Space events like eclipses and meteor showers are easy to miss, and most people 
 - `NavigationStack`, sheets, `TabView`
 - SceneKit for the 3D planets
 - URLSession, async/await, Codable (Spaceflight News API)
+- Launch Library 2 v2.3.0 (upcoming launches, one-hour JSON cache)
 - Bundled JSON data for planets and sky events
 - Planned: Swift Charts, Local Notifications, EventKit, Core Location, PhotosPicker
 
@@ -57,7 +58,7 @@ The app works without any API keys. Planets and sky events come from the bundled
 | Service | Key needed | Used for |
 |---|---|---|
 | Spaceflight News API | No | News tab |
-| Launch Library 2 (planned) | No (15 requests/hour) | Upcoming launches |
+| Launch Library 2 | No (15 requests/hour) | Upcoming launches |
 | Solar System OpenData (planned) | Yes, free by email | Extra planet data |
 | Gemini API, free tier (optional) | Yes | AI feature |
 
@@ -75,20 +76,14 @@ To add a key:
 - Meteor shower dates are approximate peak dates and should be checked each year.
 - Planet values are rounded averages. Moon counts change as new moons are confirmed.
 - News: Spaceflight News API by The Space Devs
+- Launches: Launch Library 2 by The Space Devs
 
 ## Planet texture maps
 
-No planet texture images are bundled yet. The 3D scene looks for an image set named
-`<planet name lowercased>_texture` in `FinalProject/Assets.xcassets` (for example,
-`mars_texture`). An optional `textureName` in `planets.json` can override that name.
-If the image is missing, the planet keeps its existing color.
-
-Free maps for the eight planets are available from [Solar System Scope](https://play.solarsystemscope.com/textures/).
-For Pluto, use NASA's [Pluto global color map](https://science.nasa.gov/resource/pluto-global-color-map/).
-When adding these maps, include the applicable credits in the README:
-
-> Planet texture maps by [Solar System Scope / INOVE](https://play.solarsystemscope.com/textures/),
-> licensed under [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
-> Changes: renamed for this app's asset catalog. (Add any resizing or image edits actually made.)
-
-> Pluto map: [NASA/JHUAPL/SwRI](https://science.nasa.gov/resource/pluto-global-color-map/).
+The nine planet textures in `FinalProject/Assets.xcassets` (`mercury_texture` through
+`pluto_texture`) were procedurally generated for this project with a custom Python script
+(NumPy + Pillow), written with help from Claude (Anthropic). Each is a 2048 × 1024
+equirectangular map whose left and right edges match, so it wraps seamlessly around the
+3D sphere. They are stylized and scientifically inspired, not real imagery (for example,
+Earth's continents are invented). Saturn's rings are drawn by the app, so its texture is the
+planet only. If an image is missing, the planet falls back to its color.

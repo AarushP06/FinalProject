@@ -10,11 +10,13 @@ struct EventsView: View {
     enum EventsTab: String, CaseIterable, Identifiable {
         case sky = "Sky Events"
         case news = "News"
+        case launches = "Launches"
         var id: String { rawValue }
     }
 
     @State private var viewModel = EventsViewModel()
     @State private var newsViewModel = NewsViewModel()
+    @State private var launchesViewModel = LaunchesViewModel()
     @State private var selectedTab: EventsTab = .sky
 
     var body: some View {
@@ -33,6 +35,8 @@ struct EventsView: View {
                     skyEventsList
                 case .news:
                     NewsListView(viewModel: newsViewModel)
+                case .launches:
+                    LaunchesListView(viewModel: launchesViewModel)
                 }
             }
             .navigationTitle("Events")
