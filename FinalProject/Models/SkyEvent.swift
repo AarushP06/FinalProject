@@ -14,6 +14,11 @@ struct SkyEvent: Codable, Identifiable, Hashable {
     let date: Date
     let visibility: String
     let summary: String
+    let source: Source?
+
+    enum Source: String, Codable {
+        case astronomyAPI
+    }
 
     enum Kind: String, Codable, CaseIterable, Identifiable {
         case solarEclipse

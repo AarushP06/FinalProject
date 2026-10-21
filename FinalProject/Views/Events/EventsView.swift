@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-/// Tab 1: upcoming sky events (bundled data) and live space news (API).
+/// Tab 1: sky events, space news, and launches.
 struct EventsView: View {
     enum EventsTab: String, CaseIterable, Identifiable {
         case sky = "Sky Events"
@@ -56,8 +56,20 @@ struct EventsView: View {
 
     private var skyEventsList: some View {
         List {
+            Button {
+                Task { await viewModel.refreshEclipses() }
+            } label: {
+                Label("Refresh eclipse predictions", systemImage: "arrow.clockwise")
+            }
+            .disabled(viewModel.isRefreshing)
+            if viewModel.isRefreshing {
+                ProgressView("Checking local eclipses…")
+            }
             if let message = viewModel.errorMessage {
                 Text(message).foregroundStyle(.red)
+            }
+            if let message = viewModel.statusMessage {
+                Text(message).foregroundStyle(.secondary)
             }
             if let next = viewModel.nextEvent {
                 NavigationLink(value: next) {
@@ -65,7 +77,16 @@ struct EventsView: View {
                 }
                 .listRowSeparator(.hidden)
             }
-            ForEach(viewModel.upcomingEvents) { event in
+            if !viewModel.apiEclipses.isEmpty {
+                Section("From AstronomyAPI") {
+                    ForEach(viewModel.apiEclipses) { event in
+                        NavigationLink(value: event) {
+                            EventRow(event: event)
+                        }
+                    }
+                }
+            }
+            ForEach(viewModel.otherUpcomingEvents) { event in
                 NavigationLink(value: event) {
                     EventRow(event: event)
                 }
@@ -138,6 +159,11 @@ struct EventRow: View {
                 Text(event.date, format: .dateTime.month(.wide).day().year())
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
+                if event.source == .astronomyAPI {
+                    Text("AstronomyAPI · local eclipse")
+                        .font(.caption)
+                        .foregroundStyle(.tint)
+                }
             }
 
             Spacer()
