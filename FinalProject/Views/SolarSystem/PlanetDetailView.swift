@@ -20,7 +20,9 @@ struct PlanetDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                PlanetSceneView(colorHex: planet.colorHex)
+                PlanetSceneView(planetName: planet.name,
+                                colorHex: planet.colorHex,
+                                textureName: planet.textureName)
                     .frame(height: 320)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
 

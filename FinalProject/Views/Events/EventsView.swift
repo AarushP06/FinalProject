@@ -55,6 +55,12 @@ struct EventsView: View {
             if let message = viewModel.errorMessage {
                 Text(message).foregroundStyle(.red)
             }
+            if let next = viewModel.nextEvent {
+                NavigationLink(value: next) {
+                    NextEventCard(event: next)
+                }
+                .listRowSeparator(.hidden)
+            }
             ForEach(viewModel.upcomingEvents) { event in
                 NavigationLink(value: event) {
                     EventRow(event: event)
@@ -62,11 +68,12 @@ struct EventsView: View {
             }
         }
         .listStyle(.plain)
+        .searchable(text: $viewModel.searchText, prompt: "Search sky events")
         .overlay {
             if viewModel.upcomingEvents.isEmpty && viewModel.errorMessage == nil {
                 ContentUnavailableView("No upcoming events",
                                        systemImage: "sparkles",
-                                       description: Text("Try a different filter."))
+                                       description: Text("Try a different search or filter."))
             }
         }
     }
@@ -84,6 +91,29 @@ struct EventsView: View {
         } label: {
             Image(systemName: "line.3.horizontal.decrease.circle")
         }
+    }
+}
+
+/// Highlights the soonest event in the current search and filter results.
+struct NextEventCard: View {
+    let event: SkyEvent
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Label("Next event", systemImage: "sparkles")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.tint)
+            Text(event.title)
+                .font(.headline)
+            Text(event.date, format: .dateTime.month(.wide).day().year())
+                .font(.subheadline)
+            Text(event.daysUntilText)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(12)
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 12))
     }
 }
 

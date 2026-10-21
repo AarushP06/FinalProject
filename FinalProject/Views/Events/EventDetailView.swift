@@ -27,10 +27,25 @@ struct EventDetailView: View {
                 Text(event.title)
                     .font(.largeTitle.bold())
 
-                HStack(spacing: 12) {
-                    StatCard(title: "Date",
-                             value: event.date.formatted(date: .abbreviated, time: .omitted))
-                    StatCard(title: "Countdown", value: event.daysUntilText)
+                StatCard(title: "Date",
+                         value: event.date.formatted(date: .abbreviated, time: .omitted))
+
+                TimelineView(.periodic(from: .now, by: 60)) { timeline in
+                    let countdown = EventsViewModel.countdown(for: event, at: timeline.date)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Countdown to event date")
+                            .font(.headline)
+                        HStack(spacing: 12) {
+                            StatCard(title: "Days", value: "\(countdown.days)")
+                            StatCard(title: "Hours", value: "\(countdown.hours)")
+                            StatCard(title: "Minutes", value: "\(countdown.minutes)")
+                        }
+                        if countdown.hasArrived {
+                            Text("The event date has arrived.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
                 }
 
                 section(title: "Where to see it", text: event.visibility)

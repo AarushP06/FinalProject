@@ -21,6 +21,7 @@ final class CelestialBody {
     var yearLengthDays: Double
     var distanceAU: Double          // average distance from the Sun
     var colorHex: String            // used for the card and the 3D sphere
+    var textureName: String?         // optional asset name; defaults to "<planet>_texture"
     var summary: String
     var isFavorite: Bool = false
 
@@ -38,6 +39,7 @@ final class CelestialBody {
          yearLengthDays: Double,
          distanceAU: Double,
          colorHex: String,
+         textureName: String? = nil,
          summary: String) {
         self.name = name
         self.order = order
@@ -50,6 +52,7 @@ final class CelestialBody {
         self.yearLengthDays = yearLengthDays
         self.distanceAU = distanceAU
         self.colorHex = colorHex
+        self.textureName = textureName
         self.summary = summary
     }
 }
@@ -67,5 +70,6 @@ struct PlanetSeed: Decodable {
     let yearLengthDays: Double
     let distanceAU: Double
     let colorHex: String
+    let textureName: String?
     let summary: String
 }

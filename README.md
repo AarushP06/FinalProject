@@ -75,3 +75,20 @@ To add a key:
 - Meteor shower dates are approximate peak dates and should be checked each year.
 - Planet values are rounded averages. Moon counts change as new moons are confirmed.
 - News: Spaceflight News API by The Space Devs
+
+## Planet texture maps
+
+No planet texture images are bundled yet. The 3D scene looks for an image set named
+`<planet name lowercased>_texture` in `FinalProject/Assets.xcassets` (for example,
+`mars_texture`). An optional `textureName` in `planets.json` can override that name.
+If the image is missing, the planet keeps its existing color.
+
+Free maps for the eight planets are available from [Solar System Scope](https://play.solarsystemscope.com/textures/).
+For Pluto, use NASA's [Pluto global color map](https://science.nasa.gov/resource/pluto-global-color-map/).
+When adding these maps, include the applicable credits in the README:
+
+> Planet texture maps by [Solar System Scope / INOVE](https://play.solarsystemscope.com/textures/),
+> licensed under [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/).
+> Changes: renamed for this app's asset catalog. (Add any resizing or image edits actually made.)
+
+> Pluto map: [NASA/JHUAPL/SwRI](https://science.nasa.gov/resource/pluto-global-color-map/).

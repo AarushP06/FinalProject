@@ -26,6 +26,7 @@ enum SeedService {
                                          yearLengthDays: seed.yearLengthDays,
                                          distanceAU: seed.distanceAU,
                                          colorHex: seed.colorHex,
+                                         textureName: seed.textureName,
                                          summary: seed.summary)
                 context.insert(body)
             }
