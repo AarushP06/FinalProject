@@ -1,0 +1,106 @@
+[
+  {
+    "id": "geminids-2026",
+    "title": "Geminid Meteor Shower",
+    "kind": "meteorShower",
+    "date": "2026-12-14",
+    "visibility": "Worldwide, best from the Northern Hemisphere after about 10 p.m.",
+    "summary": "Often the strongest shower of the year. The meteors come from debris left by the asteroid 3200 Phaethon. Approximate peak date."
+  },
+  {
+    "id": "quadrantids-2027",
+    "title": "Quadrantid Meteor Shower",
+    "kind": "meteorShower",
+    "date": "2027-01-03",
+    "visibility": "Northern Hemisphere, best before dawn.",
+    "summary": "A short, sharp peak that only lasts a few hours, so timing matters. Approximate peak date."
+  },
+  {
+    "id": "annular-solar-2027-02-06",
+    "title": "Annular Solar Eclipse",
+    "kind": "solarEclipse",
+    "date": "2027-02-06",
+    "visibility": "Ring of fire in parts of South America and Africa (Chile, Argentina, Uruguay, Brazil, Ivory Coast, Ghana, Togo, Benin, Nigeria). Partial over a wider area.",
+    "summary": "The Moon passes in front of the Sun but is too far from Earth to cover it fully, leaving a bright ring around its edge."
+  },
+  {
+    "id": "penumbral-lunar-2027-02-20",
+    "title": "Penumbral Lunar Eclipse",
+    "kind": "lunarEclipse",
+    "date": "2027-02-20",
+    "visibility": "Depends on location. Check a local eclipse calculator.",
+    "summary": "The Moon passes through the faint outer part of Earth's shadow, so it only dims slightly."
+  },
+  {
+    "id": "lyrids-2027",
+    "title": "Lyrid Meteor Shower",
+    "kind": "meteorShower",
+    "date": "2027-04-22",
+    "visibility": "Best from the Northern Hemisphere, after midnight.",
+    "summary": "One of the oldest recorded meteor showers, made of debris from Comet Thatcher. Approximate peak date."
+  },
+  {
+    "id": "eta-aquariids-2027",
+    "title": "Eta Aquariid Meteor Shower",
+    "kind": "meteorShower",
+    "date": "2027-05-06",
+    "visibility": "Best from the Southern Hemisphere, before dawn.",
+    "summary": "Fast meteors from dust left by Halley's Comet. Approximate peak date."
+  },
+  {
+    "id": "total-solar-2027-08-02",
+    "title": "Total Solar Eclipse",
+    "kind": "solarEclipse",
+    "date": "2027-08-02",
+    "visibility": "Total in southern Spain, North Africa (Morocco, Algeria, Tunisia, Libya, Egypt), Saudi Arabia and Yemen. Partial in most of Europe, the Middle East and eastern Canada.",
+    "summary": "The Moon completely covers the Sun for several minutes along a narrow path, turning day into twilight."
+  },
+  {
+    "id": "perseids-2027",
+    "title": "Perseid Meteor Shower",
+    "kind": "meteorShower",
+    "date": "2027-08-12",
+    "visibility": "Northern Hemisphere, best in the hours before dawn.",
+    "summary": "A summer favorite with many bright meteors, caused by debris from Comet Swift-Tuttle. Approximate peak date."
+  },
+  {
+    "id": "penumbral-lunar-2027-08-17",
+    "title": "Penumbral Lunar Eclipse",
+    "kind": "lunarEclipse",
+    "date": "2027-08-17",
+    "visibility": "Depends on location. Check a local eclipse calculator.",
+    "summary": "A subtle eclipse where the Moon slips through the outer edge of Earth's shadow."
+  },
+  {
+    "id": "orionids-2027",
+    "title": "Orionid Meteor Shower",
+    "kind": "meteorShower",
+    "date": "2027-10-21",
+    "visibility": "Both hemispheres, best after midnight.",
+    "summary": "A second shower from Halley's Comet debris, known for fast meteors. Approximate peak date."
+  },
+  {
+    "id": "geminids-2027",
+    "title": "Geminid Meteor Shower",
+    "kind": "meteorShower",
+    "date": "2027-12-14",
+    "visibility": "Worldwide, best from the Northern Hemisphere after about 10 p.m.",
+    "summary": "The year's strongest shower returns. Approximate peak date."
+  },
+  {
+    "id": "partial-lunar-2028-01-12",
+    "title": "Partial Lunar Eclipse",
+    "kind": "lunarEclipse",
+    "date": "2028-01-12",
+    "visibility": "Depends on location. Check a local eclipse calculator.",
+    "summary": "Part of the Moon moves into Earth's dark inner shadow and looks like a bite has been taken out of it."
+  },
+  {
+    "id": "annular-solar-2028-01-26",
+    "title": "Annular Solar Eclipse",
+    "kind": "solarEclipse",
+    "date": "2028-01-26",
+    "visibility": "Depends on location. Check a local eclipse calculator.",
+    "summary": "Another ring of fire eclipse, where the Moon leaves a thin ring of the Sun showing."
+  }
+]

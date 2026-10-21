@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Mercury", "order": 1, "isDwarfPlanet": false,
+    "radiusKm": 2439.7, "gravity": 3.7, "meanTemperatureC": 167, "moonCount": 0,
+    "dayLengthHours": 4222.6, "yearLengthDays": 88.0, "distanceAU": 0.39,
+    "colorHex": "#9E9E9E",
+    "summary": "The smallest planet and the closest to the Sun. It has almost no atmosphere, so it swings from scorching days to freezing nights."
+  },
+  {
+    "name": "Venus", "order": 2, "isDwarfPlanet": false,
+    "radiusKm": 6051.8, "gravity": 8.9, "meanTemperatureC": 464, "moonCount": 0,
+    "dayLengthHours": 2802.0, "yearLengthDays": 224.7, "distanceAU": 0.72,
+    "colorHex": "#E3C16F",
+    "summary": "The hottest planet, wrapped in thick carbon dioxide clouds that trap heat. It spins backwards compared to most planets."
+  },
+  {
+    "name": "Earth", "order": 3, "isDwarfPlanet": false,
+    "radiusKm": 6371.0, "gravity": 9.8, "meanTemperatureC": 15, "moonCount": 1,
+    "dayLengthHours": 24.0, "yearLengthDays": 365.25, "distanceAU": 1.0,
+    "colorHex": "#3B7DD8",
+    "summary": "Our home and the only place known to have life, with liquid water covering about 70% of its surface."
+  },
+  {
+    "name": "Mars", "order": 4, "isDwarfPlanet": false,
+    "radiusKm": 3389.5, "gravity": 3.7, "meanTemperatureC": -65, "moonCount": 2,
+    "dayLengthHours": 24.7, "yearLengthDays": 687.0, "distanceAU": 1.52,
+    "colorHex": "#C1440E",
+    "summary": "The red planet, colored by iron oxide dust. It has the tallest volcano in the solar system, Olympus Mons."
+  },
+  {
+    "name": "Jupiter", "order": 5, "isDwarfPlanet": false,
+    "radiusKm": 69911.0, "gravity": 23.1, "meanTemperatureC": -110, "moonCount": 95,
+    "dayLengthHours": 9.9, "yearLengthDays": 4331.0, "distanceAU": 5.2,
+    "colorHex": "#D8A170",
+    "summary": "The largest planet, a gas giant with the Great Red Spot, a storm bigger than Earth."
+  },
+  {
+    "name": "Saturn", "order": 6, "isDwarfPlanet": false,
+    "radiusKm": 58232.0, "gravity": 9.0, "meanTemperatureC": -140, "moonCount": 274,
+    "dayLengthHours": 10.7, "yearLengthDays": 10747.0, "distanceAU": 9.54,
+    "colorHex": "#E3D18A",
+    "summary": "Famous for its bright rings of ice and rock. It is so light for its size that it would float in water."
+  },
+  {
+    "name": "Uranus", "order": 7, "isDwarfPlanet": false,
+    "radiusKm": 25362.0, "gravity": 8.7, "meanTemperatureC": -195, "moonCount": 28,
+    "dayLengthHours": 17.2, "yearLengthDays": 30589.0, "distanceAU": 19.2,
+    "colorHex": "#9FD8E0",
+    "summary": "An ice giant tipped on its side, so it rolls around the Sun. Methane in its atmosphere gives it a blue-green color."
+  },
+  {
+    "name": "Neptune", "order": 8, "isDwarfPlanet": false,
+    "radiusKm": 24622.0, "gravity": 11.0, "meanTemperatureC": -200, "moonCount": 16,
+    "dayLengthHours": 16.1, "yearLengthDays": 59800.0, "distanceAU": 30.06,
+    "colorHex": "#3E66F9",
+    "summary": "The farthest planet, with the fastest winds in the solar system. It was found by math before anyone saw it."
+  },
+  {
+    "name": "Pluto", "order": 9, "isDwarfPlanet": true,
+    "radiusKm": 1188.3, "gravity": 0.62, "meanTemperatureC": -225, "moonCount": 5,
+    "dayLengthHours": 153.3, "yearLengthDays": 90560.0, "distanceAU": 39.5,
+    "colorHex": "#C9B39A",
+    "summary": "Reclassified as a dwarf planet in 2006 because it has not cleared its orbit of other objects. It has a heart-shaped glacier."
+  }
+]
