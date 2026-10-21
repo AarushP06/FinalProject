@@ -17,6 +17,7 @@ struct ObservationFormView: View {
     @State private var viewModel = MySkyViewModel()
 
     private let existing: SkyObservation?
+    private let draftPlanetName: String?
     @State private var title: String
     @State private var date: Date
     @State private var notes: String
@@ -32,12 +33,14 @@ struct ObservationFormView: View {
 
     init(observation: SkyObservation? = nil,
          prefilledBody: CelestialBody? = nil,
-         prefilledEvent: SavedEvent? = nil) {
+         prefilledEvent: SavedEvent? = nil,
+         draft: ObservationDraft? = nil) {
         existing = observation
-        _title = State(initialValue: observation?.title ?? "")
-        _date = State(initialValue: observation?.date ?? .now)
-        _notes = State(initialValue: observation?.notes ?? "")
-        _rating = State(initialValue: observation?.rating ?? 3)
+        draftPlanetName = draft?.planetName
+        _title = State(initialValue: observation?.title ?? draft?.title ?? "")
+        _date = State(initialValue: observation?.date ?? draft?.date ?? .now)
+        _notes = State(initialValue: observation?.notes ?? draft?.notes ?? "")
+        _rating = State(initialValue: observation?.rating ?? draft?.rating ?? 3)
         _selectedBody = State(initialValue: observation?.celestialBody ?? prefilledBody)
         _selectedEvent = State(initialValue: observation?.event ?? prefilledEvent)
         _photoData = State(initialValue: observation?.photoData)
@@ -121,6 +124,11 @@ struct ObservationFormView: View {
             }
             .navigationTitle(existing == nil ? "New Observation" : "Edit Observation")
             .navigationBarTitleDisplayMode(.inline)
+            .task(id: bodies.count) {
+                if existing == nil, selectedBody == nil, let draftPlanetName {
+                    selectedBody = viewModel.planet(named: draftPlanetName, in: bodies)
+                }
+            }
             .onChange(of: selectedPhoto) { _, item in
                 loadPhoto(item)
             }

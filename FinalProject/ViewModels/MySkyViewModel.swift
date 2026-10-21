@@ -79,6 +79,10 @@ final class MySkyViewModel {
 
     // MARK: - Observations
 
+    func planet(named name: String, in bodies: [CelestialBody]) -> CelestialBody? {
+        bodies.first { $0.name.caseInsensitiveCompare(name) == .orderedSame }
+    }
+
     func loadObservationPhoto(_ item: PhotosPickerItem) async -> Data? {
         do {
             guard let data = try await item.loadTransferable(type: Data.self),

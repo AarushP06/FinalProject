@@ -198,6 +198,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Final Project";
 				INFOPLIST_KEY_NSCalendarsWriteOnlyAccessUsageDescription = "Adds saved sky events to your calendar.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Saves where you made an observation.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Records your spoken observation for Quick log.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Turns your spoken observation into text for Quick log.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -228,6 +230,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Final Project";
 				INFOPLIST_KEY_NSCalendarsWriteOnlyAccessUsageDescription = "Adds saved sky events to your calendar.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Saves where you made an observation.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Records your spoken observation for Quick log.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Turns your spoken observation into text for Quick log.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

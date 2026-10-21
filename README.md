@@ -16,7 +16,7 @@ Space events like eclipses and meteor showers are easy to miss, and most people 
 1. **Sky Events:** upcoming eclipses and meteor showers with a countdown, where they're visible, and what happens. Filter by type and save events to My Sky.
 2. **Space News and Launches:** the latest spaceflight articles and upcoming launches, with pull to refresh. Launches are cached for one hour to limit API requests.
 3. **Solar System:** the eight planets, with a toggle to include Pluto. Each planet opens a 3D model you can rotate and zoom, plus insight cards (gravity, temperature, moons, day and year length). An optional API refresh adds current moon counts, mass, and density.
-4. **My Sky:** saved events with notes and reminders, and an observation log (create, edit, delete) linked to planets and events.
+4. **My Sky:** saved events with notes and reminders, and an observation log (create, edit, delete) linked to planets and events. Quick log accepts typed or spoken observations, then opens an editable draft for confirmation before saving.
 
 ## Technologies used
 
@@ -28,6 +28,7 @@ Space events like eclipses and meteor showers are easy to miss, and most people 
 - Local notifications for saved events (9 a.m. the day before)
 - EventKit write-only access to add saved events as all-day calendar entries
 - PhotosPicker and Core Location for observation photos and coordinates
+- Speech framework for voice input and Gemini structured JSON for Quick log drafts
 - URLSession, async/await, Codable (Spaceflight News API)
 - Launch Library 2 v2.3.0 (upcoming launches, one-hour JSON cache)
 - Bundled JSON data for planets and sky events
@@ -44,7 +45,7 @@ FinalProject/
 │   ├── SolarSystem/   Planet grid, planet detail, 3D scene
 │   ├── MySky/         Saved events, observations, forms
 │   └── Components/    Small reusable views and helpers
-├── Services/       API clients, JSON loading, seeding, notifications, calendar
+├── Services/       API clients, JSON loading, seeding, notifications, calendar, speech
 └── Data/           planets.json and sky_events.json
 ```
 
@@ -63,13 +64,16 @@ The app works without any API keys. Planets and sky events come from the bundled
 | Spaceflight News API | No | News tab |
 | Launch Library 2 | No (15 requests/hour) | Upcoming launches |
 | Solar System OpenData | Yes, free by email | Optional planet refresh |
-| Gemini API, free tier (optional) | Yes | AI feature |
+| Gemini API, free tier (optional) | Yes | Quick log draft |
 
 To add a key:
 
 1. Copy `FinalProject/Secrets.example.plist` to `FinalProject/Secrets.plist` (the copy is gitignored).
 2. Add your free Solar System OpenData key as the `SOLAR_SYSTEM_API_KEY` String value. Get one from [Solar System OpenData](https://api.le-systeme-solaire.net/en/generatekey.html).
-3. The app reads the key from this bundled file at runtime. Without it, planet details keep their bundled values and show a short message when you tap **Refresh from API**.
+3. For Quick log, add a [Google AI Studio API key](https://aistudio.google.com/apikey) as the `GEMINI_API_KEY` String value. Manual observation logging works without it.
+4. The app reads keys from this bundled file at runtime. Without the Solar System key, planet details keep their bundled values. Without the Gemini key, Quick log shows a short message and keeps your typed text.
+
+Voice input asks for microphone and speech recognition permission when you tap **Speak observation**. You can type a Quick log if either permission is unavailable. Quick log sends the description to Gemini to prepare a draft; the observation is saved only after you review the form and tap **Save**.
 
 **Never commit API keys to GitHub.**
 

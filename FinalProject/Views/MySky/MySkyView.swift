@@ -14,6 +14,7 @@ struct MySkyView: View {
 
     @State private var viewModel = MySkyViewModel()
     @State private var showingNewObservation = false
+    @State private var showingQuickLog = false
     @State private var editingObservation: SkyObservation?
     @State private var editingEvent: SavedEvent?
 
@@ -40,6 +41,11 @@ struct MySkyView: View {
                 }
 
                 Section("Observations") {
+                    Button {
+                        showingQuickLog = true
+                    } label: {
+                        Label("Quick log with voice or text", systemImage: "waveform")
+                    }
                     if observations.isEmpty {
                         Text("Tap + to log what you saw.")
                             .foregroundStyle(.secondary)
@@ -73,6 +79,9 @@ struct MySkyView: View {
             }
             .sheet(isPresented: $showingNewObservation) {
                 ObservationFormView()
+            }
+            .sheet(isPresented: $showingQuickLog) {
+                QuickLogView()
             }
             .sheet(item: $editingObservation) { observation in
                 ObservationFormView(observation: observation)
