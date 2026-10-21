@@ -15,6 +15,8 @@ struct SaveEventSheet: View {
     @State private var viewModel = MySkyViewModel()
     @State private var notes = ""
     @State private var reminderEnabled = true
+    @State private var isSaving = false
+    @State private var showingReminderAlert = false
 
     var body: some View {
         NavigationStack {
@@ -29,22 +31,44 @@ struct SaveEventSheet: View {
                         .lineLimit(3...6)
                     Toggle("Remind me the day before", isOn: $reminderEnabled)
                 }
+                if let message = viewModel.errorMessage {
+                    Text(message).foregroundStyle(.red)
+                }
             }
+            .disabled(isSaving)
             .navigationTitle("Save Event")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
+                        .disabled(isSaving)
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
-                        viewModel.saveEvent(event,
-                                            notes: notes,
-                                            reminderEnabled: reminderEnabled,
-                                            context: context)
-                        dismiss()
-                    }
+                    Button("Save") { save() }
+                    .disabled(isSaving)
                 }
+            }
+            .alert("Reminder unavailable", isPresented: $showingReminderAlert) {
+                Button("OK") { dismiss() }
+            } message: {
+                Text(viewModel.notificationMessage ?? "The event was saved without a reminder.")
+            }
+        }
+    }
+
+    private func save() {
+        isSaving = true
+        Task {
+            await viewModel.saveEvent(event,
+                                      notes: notes,
+                                      reminderEnabled: reminderEnabled,
+                                      context: context)
+            isSaving = false
+            guard viewModel.errorMessage == nil else { return }
+            if viewModel.notificationMessage == nil {
+                dismiss()
+            } else {
+                showingReminderAlert = true
             }
         }
     }

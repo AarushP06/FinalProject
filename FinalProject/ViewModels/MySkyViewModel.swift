@@ -9,36 +9,65 @@ import Observation
 
 /// All create / update / delete logic for saved events and observations.
 /// Views call these methods instead of touching the ModelContext directly.
+@MainActor
 @Observable
 final class MySkyViewModel {
     var errorMessage: String?
+    var notificationMessage: String?
+    var calendarMessage: String?
+    var calendarAdded = false
 
     // MARK: - Saved events
 
-    func saveEvent(_ event: SkyEvent, notes: String, reminderEnabled: Bool, context: ModelContext) {
+    func saveEvent(_ event: SkyEvent, notes: String, reminderEnabled: Bool, context: ModelContext) async {
+        notificationMessage = nil
         let saved = SavedEvent(eventID: event.id,
                                title: event.title,
                                kind: event.kind.rawValue,
                                date: event.date,
                                visibility: event.visibility,
                                notes: notes,
-                               reminderEnabled: reminderEnabled)
+                               reminderEnabled: false)
         context.insert(saved)
-        persist(context)
-        // TODO (Prompt 6): if reminderEnabled, schedule a reminder with NotificationService.
+        guard persist(context) else {
+            context.delete(saved)
+            return
+        }
+        if reminderEnabled {
+            await enableReminder(for: saved, context: context)
+        }
     }
 
-    func updateSavedEvent(_ saved: SavedEvent, notes: String, reminderEnabled: Bool, context: ModelContext) {
+    func updateSavedEvent(_ saved: SavedEvent, notes: String, reminderEnabled: Bool, context: ModelContext) async {
+        notificationMessage = nil
         saved.notes = notes
-        saved.reminderEnabled = reminderEnabled
-        persist(context)
-        // TODO (Prompt 6): reschedule or cancel the reminder.
+        saved.reminderEnabled = false
+        guard persist(context) else { return }
+        NotificationService.cancelReminder(for: saved)
+        if reminderEnabled {
+            await enableReminder(for: saved, context: context)
+        }
     }
 
     func deleteSavedEvent(_ saved: SavedEvent, context: ModelContext) {
-        // TODO (Prompt 6): cancel the reminder first.
+        NotificationService.cancelReminder(for: saved)
         context.delete(saved)
         persist(context)
+    }
+
+    func addToCalendar(_ saved: SavedEvent, notes: String) async {
+        let details = CalendarEventDetails(title: saved.title,
+                                           date: saved.date,
+                                           notes: notes,
+                                           visibility: saved.visibility)
+        do {
+            try await CalendarService.addEvent(details)
+            calendarAdded = true
+            calendarMessage = "Added as an all-day event."
+        } catch {
+            calendarAdded = false
+            calendarMessage = error.localizedDescription
+        }
     }
 
     // MARK: - Observations
@@ -84,12 +113,28 @@ final class MySkyViewModel {
 
     // MARK: - Helpers
 
-    private func persist(_ context: ModelContext) {
+    private func enableReminder(for saved: SavedEvent, context: ModelContext) async {
+        do {
+            try await NotificationService.scheduleReminder(for: saved)
+            saved.reminderEnabled = true
+            if !persist(context) {
+                NotificationService.cancelReminder(for: saved)
+                saved.reminderEnabled = false
+            }
+        } catch {
+            notificationMessage = error.localizedDescription
+        }
+    }
+
+    @discardableResult
+    private func persist(_ context: ModelContext) -> Bool {
         do {
             try context.save()
             errorMessage = nil
+            return true
         } catch {
             errorMessage = "Couldn't save: \(error.localizedDescription)"
+            return false
         }
     }
 }

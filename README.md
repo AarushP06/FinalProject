@@ -24,10 +24,13 @@ Space events like eclipses and meteor showers are easy to miss, and most people 
 - SwiftData with three related `@Model` types: `CelestialBody`, `SavedEvent`, `SkyObservation`
 - `NavigationStack`, sheets, `TabView`
 - SceneKit for the 3D planets
+- Swift Charts for Earth comparisons
+- Local notifications for saved events (9 a.m. the day before)
+- EventKit write-only access to add saved events as all-day calendar entries
 - URLSession, async/await, Codable (Spaceflight News API)
 - Launch Library 2 v2.3.0 (upcoming launches, one-hour JSON cache)
 - Bundled JSON data for planets and sky events
-- Planned: Swift Charts, Local Notifications, EventKit, Core Location, PhotosPicker
+- Planned: Core Location, PhotosPicker
 
 ## Project structure
 
@@ -41,7 +44,7 @@ FinalProject/
 │   ├── SolarSystem/   Planet grid, planet detail, 3D scene
 │   ├── MySky/         Saved events, observations, forms
 │   └── Components/    Small reusable views and helpers
-├── Services/       API clients, JSON loading, seeding, notifications
+├── Services/       API clients, JSON loading, seeding, notifications, calendar
 └── Data/           planets.json and sky_events.json
 ```
 
