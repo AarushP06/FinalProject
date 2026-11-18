@@ -6,6 +6,7 @@ Champlain College Saint-Lambert · Instructor: Morteza Khanjanzadeh
 ## Team members
 
 - Aarush Patel (2330241)
+- Eric Ionascu (2432164)
 
 ## Project purpose
 
